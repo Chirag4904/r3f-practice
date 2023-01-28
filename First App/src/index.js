@@ -7,10 +7,12 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
 	<Canvas
-		orthographic
+		// orthographic
 		camera={{
+			near: 0.1,
+			far: 1000,
 			fov: 75,
-			position: [3, 2, 6],
+			position: [3, 2, 9],
 		}}
 	>
 		<Experience />
