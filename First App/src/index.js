@@ -2,11 +2,14 @@ import { createRoot } from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
 import "./style.css";
 import Experience from "./Experience";
+import * as THREE from "three";
 
 const root = createRoot(document.getElementById("root"));
 
 root.render(
 	<Canvas
+		// flat
+		gl={{ antialias: true, outputEncoding: THREE.sRGBEncoding }}
 		// orthographic
 		camera={{
 			near: 0.1,
