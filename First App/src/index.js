@@ -9,6 +9,7 @@ const root = createRoot(document.getElementById("root"));
 root.render(
 	<Canvas
 		// flat
+		dpr={[1, 2]}
 		gl={{ antialias: true, outputEncoding: THREE.sRGBEncoding }}
 		// orthographic
 		camera={{
