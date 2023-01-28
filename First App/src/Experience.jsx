@@ -12,6 +12,11 @@ const Experience = () => {
 	const cubeRef = useRef();
 	const groupRef = useRef();
 	useFrame((state, delta) => {
+		const angle = state.clock.elapsedTime;
+		state.camera.position.x = Math.sin(angle) * 10;
+		state.camera.position.z = Math.cos(angle) * 10;
+		state.camera.lookAt(0, 0, 0);
+
 		// console.log(delta);
 		cubeRef.current.rotation.y += delta;
 		// groupRef.current.rotation.y += delta * 5;
@@ -23,7 +28,7 @@ const Experience = () => {
 
 	return (
 		<>
-			<orbitControls args={[camera, gl.domElement]} />
+			{/* <orbitControls args={[camera, gl.domElement]} /> */}
 
 			{/* Lights */}
 			<directionalLight position={[1, 2, 3]} />
