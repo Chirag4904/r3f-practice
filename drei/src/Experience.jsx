@@ -6,6 +6,7 @@ import {
 	PivotControls,
 	Html,
 	Text,
+	Float,
 } from "@react-three/drei";
 
 const Experience = () => {
@@ -57,11 +58,12 @@ const Experience = () => {
 				<planeGeometry args={[15, 15]} />
 				<meshStandardMaterial color="greenyellow" wireframe={false} />
 			</mesh>
-
-			<Text maxWidth={3} textAlign="center">
-				I Love R3F
-				<meshNormalMaterial />
-			</Text>
+			<Float speed={4} floatIntensity={4}>
+				<Text maxWidth={3} textAlign="center" position-y={2}>
+					I Love R3F
+					<meshNormalMaterial />
+				</Text>
+			</Float>
 		</>
 	);
 };
