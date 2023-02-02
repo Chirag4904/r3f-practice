@@ -4,6 +4,7 @@ import {
 	OrbitControls,
 	TransformControls,
 	PivotControls,
+	Html,
 } from "@react-three/drei";
 
 const Experience = () => {
@@ -30,11 +31,20 @@ const Experience = () => {
 				depthTest={false}
 				lineWidth={4}
 				axisColors={["#9381ff", "#ff4d6d", "#7ae582"]}
-				scale={1.5}
+				scale={100}
+				fixed={true}
 			>
 				<mesh scale={0.7} position={[-3, 0, 0]}>
 					<sphereGeometry />
 					<meshStandardMaterial color="orange" wireframe={false} />
+					<Html
+						wrapperClass="sphere-text"
+						position={[1, 1, 0]}
+						center
+						distanceFactor={8}
+					>
+						Sphere
+					</Html>
 				</mesh>
 			</PivotControls>
 
