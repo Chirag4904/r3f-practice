@@ -7,6 +7,8 @@ import {
 	Html,
 	Text,
 	Float,
+	MeshReflectorMaterial,
+	Sky,
 } from "@react-three/drei";
 
 const Experience = () => {
@@ -42,6 +44,7 @@ const Experience = () => {
 				<mesh scale={0.7} position={[-3, 0, 0]} ref={sphereRef}>
 					<sphereGeometry />
 					<meshStandardMaterial color="orange" wireframe={false} />
+
 					<Html
 						wrapperClass="sphere-text" // class name to style the Html element
 						position={[1, 1, 0]} // position relative to the object
@@ -56,7 +59,14 @@ const Experience = () => {
 
 			<mesh position-y={-1} rotation-x={-Math.PI * 0.5}>
 				<planeGeometry args={[15, 15]} />
-				<meshStandardMaterial color="greenyellow" wireframe={false} />
+				<MeshReflectorMaterial
+					resolution={512} // resolution of the reflection texture higher value means better quality but slower performance
+					blur={[1000, 1000]} // blur of the reflection texture
+					mixBlur={0} // mix blur of the reflection texture 0 means no blur and 1 means full blur
+					mirror={0.7}
+					color="greenyellow"
+				/>
+				{/* <meshStandardMaterial color="greenyellow" wireframe={false} /> */}
 			</mesh>
 			<Float speed={4} floatIntensity={4}>
 				<Text maxWidth={3} textAlign="center" position-y={2}>
@@ -64,6 +74,7 @@ const Experience = () => {
 					<meshNormalMaterial />
 				</Text>
 			</Float>
+			<Sky />
 		</>
 	);
 };
