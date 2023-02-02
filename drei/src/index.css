@@ -16,3 +16,14 @@ body,
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.sphere-text > div {
+	position: absolute;
+	background-color: black;
+	color: white;
+	padding: 16px;
+	white-space: nowrap;
+	user-select: none;
+	border-radius: 30px;
+	overflow: hidden;
+}
