@@ -1,6 +1,10 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import { OrbitControls, TransformControls } from "@react-three/drei";
+import {
+	OrbitControls,
+	TransformControls,
+	PivotControls,
+} from "@react-three/drei";
 
 const Experience = () => {
 	const cubeRef = useRef();
@@ -11,21 +15,28 @@ const Experience = () => {
 
 	return (
 		<>
-			<OrbitControls />
+			<OrbitControls makeDefault />
 			<directionalLight position={[1, 2, 3]} />
 			<ambientLight intensity={0.3} />
-			<group>
-				<TransformControls>
-					<mesh position={[3, 0, 0]} ref={cubeRef}>
-						<boxGeometry />
-						<meshStandardMaterial color="red" wireframe={false} />
-					</mesh>
-				</TransformControls>
+
+			<mesh position={[3, 0, 0]} ref={cubeRef}>
+				<boxGeometry />
+				<meshStandardMaterial color="red" wireframe={false} />
+			</mesh>
+			<TransformControls object={cubeRef} />
+
+			<PivotControls
+				anchor={[0, 0, 0]}
+				depthTest={false}
+				lineWidth={4}
+				axisColors={["#9381ff", "#ff4d6d", "#7ae582"]}
+				scale={1.5}
+			>
 				<mesh scale={0.7} position={[-3, 0, 0]}>
 					<sphereGeometry />
 					<meshStandardMaterial color="orange" wireframe={false} />
 				</mesh>
-			</group>
+			</PivotControls>
 
 			<mesh position-y={-1} rotation-x={-Math.PI * 0.5}>
 				<planeGeometry args={[15, 15]} />
