@@ -12,10 +12,10 @@ const Experience = () => {
 	const cubeRef = useRef();
 	const groupRef = useRef();
 	useFrame((state, delta) => {
-		const angle = state.clock.elapsedTime;
-		state.camera.position.x = Math.sin(angle) * 10;
-		state.camera.position.z = Math.cos(angle) * 10;
-		state.camera.lookAt(0, 0, 0);
+		// const angle = state.clock.elapsedTime;
+		// state.camera.position.x = Math.sin(angle) * 10;
+		// state.camera.position.z = Math.cos(angle) * 10;
+		// state.camera.lookAt(0, 0, 0);
 
 		// console.log(delta);
 		cubeRef.current.rotation.y += delta;
