@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
+	/* background-color: white; */
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.sphere-text > div {
+	position: absolute;
+	background-color: black;
+	color: white;
+	padding: 16px;
+	white-space: nowrap;
+	user-select: none;
+	border-radius: 30px;
+	overflow: hidden;
+}
