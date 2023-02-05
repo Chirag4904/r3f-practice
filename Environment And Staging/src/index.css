@@ -11,19 +11,13 @@ body,
 	/* background-color: white; */
 }
 
+/* Option 1 to change background color of the scene is to set background color of the body as the default background is transparent in react three fiber */
+/* body {
+	background-color: aqua;
+} */
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-}
-
-.sphere-text > div {
-	position: absolute;
-	background-color: black;
-	color: white;
-	padding: 16px;
-	white-space: nowrap;
-	user-select: none;
-	border-radius: 30px;
-	overflow: hidden;
 }
