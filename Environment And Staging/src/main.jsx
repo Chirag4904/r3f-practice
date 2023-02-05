@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<>
 		<Leva collapsed={true} />
 		<Canvas
+			shadows={true} //activate shadow on renderer
 			onCreated={created}
 			alpha="true"
 			camera={{
