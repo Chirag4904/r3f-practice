@@ -3,13 +3,16 @@ import { useRef } from "react";
 import {
 	OrbitControls,
 	useHelper,
-	BakeShadows,
-	AccumulativeShadows,
+	ContactShadows,
+	Sky,
+	// BakeShadows,
+	// AccumulativeShadows,
 	// softShadows,
-	RandomizedLight,
+	// RandomizedLight,
 } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import * as THREE from "three";
+import { useControls } from "leva";
 
 // Use backing when the scene is static to improve performance and we can use BakeShadows helper from drei
 // It will render the shadows only once and not on each frame
@@ -28,10 +31,23 @@ import * as THREE from "three";
 
 // So if we use directional light since it's still the shadows which are rendered multiple times are applied again and again due to which the shadows become darker and darker so 1 solution is to ue RandomizedLight helper from drei which will move the light or lights randomly on each frame
 
+//CONTACT SHADOWS - works without light and on a plane
+// It will render the whole scene a bit like how the directional light does, but with the camera taking place of floor instead of the light. It will then blur the shadow map to make it look better.
+
 const Experience = () => {
 	const cubeRef = useRef();
 	const sphereRef = useRef();
 	const directionalLight = useRef();
+
+	const { color, opacity, blur } = useControls("Contact shadow", {
+		color: { value: "#1d8f75", label: "Color" },
+		opacity: { value: 0.4, min: 0, max: 1, step: 0.01, label: "Opacity" },
+		blur: { value: 2.8, min: 0, max: 10, step: 0.01, label: "Blur" },
+	});
+
+	const { sunPosition } = useControls("Sky", {
+		sunPosition: { value: [0, 1, 0], label: "Sun Position" },
+	});
 
 	useHelper(directionalLight, THREE.DirectionalLightHelper, 0.5, "hotpink"); //useHelper is a hook that allows you to add helpers to objects where first argument is the object you want to add the helper to, second argument is the helper class from threejs you want to add, third argument is the size of the helper, and fourth argument is the color of the helper
 
@@ -48,7 +64,7 @@ const Experience = () => {
 			<OrbitControls
 				makeDefault // when using multiple controls, only one should be default so that the other controls can work
 			/>
-			<AccumulativeShadows
+			{/* <AccumulativeShadows
 				position={[0, -0.99, 0]}
 				scale={10} //default scale is 10
 				color="#316d39"
@@ -66,7 +82,18 @@ const Experience = () => {
 					position={[1, 2, 3]}
 					castShadow
 				/>
-			</AccumulativeShadows>
+			</AccumulativeShadows> */}
+
+			<ContactShadows
+				position={[0, -0.99, 0]}
+				scale={10}
+				resolution={512}
+				far={5} //to capture the shadows of objects which are far away
+				color={color}
+				opacity={opacity}
+				blur={blur}
+				// frames={1} // can be used to bake the shadow (frames=1)
+			/>
 
 			<directionalLight
 				ref={directionalLight}
@@ -81,6 +108,8 @@ const Experience = () => {
 				shadow-camera-bottom={-5}
 			/>
 			<ambientLight intensity={0.3} />
+
+			<Sky sunPosition={sunPosition} />
 
 			<mesh position={[2, 0, 0]} ref={cubeRef} castShadow>
 				<boxGeometry />

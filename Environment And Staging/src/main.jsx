@@ -18,7 +18,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<>
 		<Leva collapsed={true} />
 		<Canvas
-			shadows={true} //activate shadow on renderer
+			// shadows={true} //activate shadow on renderer
+			shadows={false} //for contact shadows as they don't rely on threejs shadow system
 			onCreated={created}
 			alpha="true"
 			camera={{
