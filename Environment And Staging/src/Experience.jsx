@@ -1,11 +1,24 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import { OrbitControls, useHelper, BakeShadows } from "@react-three/drei";
+import {
+	OrbitControls,
+	useHelper,
+	BakeShadows,
+	softShadows,
+} from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import * as THREE from "three";
 
 // Use backing when the scene is static to improve performance and we can use BakeShadows helper from drei
 // It will render the shadows only once and not on each frame
+
+softShadows({
+	frustum: 3.75, // frustum is the distance from the camera to the far plane
+	size: 0.005, // size is the size of the shadow map
+	near: 0.5, // near is the distance from the camera to the near plane
+	samples: 17, // samples is the number of samples used to render the shadow map
+	rings: 11, // rings is the number of rings used to render the shadow map
+});
 
 const Experience = () => {
 	const cubeRef = useRef();
@@ -30,13 +43,13 @@ const Experience = () => {
 				ref={directionalLight}
 				position={[1, 2, 3]}
 				castShadow
-				shadow-mapSize={[128, 128]}
+				shadow-mapSize={[128 * 4, 128 * 4]}
 				// shadow-camera-far={10}
 				// shadow-camera-near={1}
-				shadow-camera-left={-2}
-				shadow-camera-right={2}
-				shadow-camera-top={2}
-				shadow-camera-bottom={-2}
+				shadow-camera-left={-5}
+				shadow-camera-right={5}
+				shadow-camera-top={5}
+				shadow-camera-bottom={-5}
 			/>
 			<ambientLight intensity={0.3} />
 
