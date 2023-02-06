@@ -4,7 +4,9 @@ import {
 	OrbitControls,
 	useHelper,
 	ContactShadows,
-	Sky,
+	Environment,
+	Lightformer,
+	// Sky,
 	// BakeShadows,
 	// AccumulativeShadows,
 	// softShadows,
@@ -39,6 +41,32 @@ const Experience = () => {
 	const sphereRef = useRef();
 	const directionalLight = useRef();
 
+	const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } =
+		useControls("Environment Map", {
+			envMapIntensity: {
+				value: 2.5,
+				min: 0,
+				max: 12,
+				step: 0.01,
+				label: "Intensity",
+			},
+			envMapHeight: {
+				value: 7,
+				min: 0,
+				max: 100,
+			},
+			envMapRadius: {
+				value: 28,
+				min: 10,
+				max: 1000,
+			},
+			envMapScale: {
+				value: 100,
+				min: 0,
+				max: 1000,
+			},
+		});
+
 	const { color, opacity, blur } = useControls("Contact shadow", {
 		color: { value: "#1d8f75", label: "Color" },
 		opacity: { value: 0.4, min: 0, max: 1, step: 0.01, label: "Opacity" },
@@ -56,8 +84,48 @@ const Experience = () => {
 		cubeRef.current.position.x = 2 + Math.sin(time);
 	});
 
+	//So instead of using 6 images we can use one image covering the surrounding. It's like 360  deg photo and it's usually in High Dynamic Range in order to make the illumination data more accurate. It makes sense as light doesn't really stop at a range.
+
 	return (
 		<>
+			{/* <Environment
+				background
+				files={[
+					"/environmentMaps/2/px.jpg",
+					"/environmentMaps/2/nx.jpg",
+					"/environmentMaps/2/py.jpg",
+					"/environmentMaps/2/ny.jpg",
+					"/environmentMaps/2/pz.jpg",
+					"/environmentMaps/2/nz.jpg",
+				]}
+			/> */}
+
+			<Environment
+				// background
+				ground={{
+					height: envMapHeight,
+					radius: envMapRadius,
+					scale: envMapScale,
+				}}
+				preset="sunset"
+				// files="/environmentMaps/the_sky_is_on_fire_2k.hdr"
+			>
+				{/* <color attach="background" args={["#000000"]} /> */}
+				{/* <mesh position-z={-5} scale={10}>
+					<planeGeometry />
+					<meshBasicMaterial color={[4, 0, 0]} />
+					// we can go beyond 1 and make it brighter like in real life
+				</mesh> */}
+				{/* we can use meshes to add lighting to the environment but there is LightFormer which is made for this purpose */}
+				{/* <Lightformer
+					position-z={-5}
+					scale={10}
+					color="red"
+					intensity={4}
+					// form="ring" 
+				/> */}
+			</Environment>
+
 			{/* <BakeShadows /> */}
 			<Perf position="top-left" />
 
@@ -85,7 +153,7 @@ const Experience = () => {
 			</AccumulativeShadows> */}
 
 			<ContactShadows
-				position={[0, -0.99, 0]}
+				position={[0, 0, 0]}
 				scale={10}
 				resolution={512}
 				far={5} //to capture the shadows of objects which are far away
@@ -95,7 +163,7 @@ const Experience = () => {
 				// frames={1} // can be used to bake the shadow (frames=1)
 			/>
 
-			<directionalLight
+			{/* <directionalLight
 				ref={directionalLight}
 				position={[1, 2, 3]}
 				castShadow
@@ -107,23 +175,34 @@ const Experience = () => {
 				shadow-camera-top={5}
 				shadow-camera-bottom={-5}
 			/>
-			<ambientLight intensity={0.3} />
+			<ambientLight intensity={0.3} /> */}
 
-			<Sky sunPosition={sunPosition} />
+			{/* <Sky sunPosition={sunPosition} /> */}
 
-			<mesh position={[2, 0, 0]} ref={cubeRef} castShadow>
+			<mesh position={[2, 1, 0]} ref={cubeRef} castShadow>
 				<boxGeometry />
-				<meshStandardMaterial color="red" wireframe={false} />
+				<meshStandardMaterial
+					color="red"
+					wireframe={false}
+					envMapIntensity={envMapIntensity}
+				/>
 			</mesh>
 
-			<mesh scale={0.7} position={[-2, 0, 0]} ref={sphereRef} castShadow>
+			<mesh scale={0.7} position={[-2, 1, 0]} ref={sphereRef} castShadow>
 				<sphereGeometry />
-				<meshStandardMaterial color="orange" wireframe={false} />
+				<meshStandardMaterial
+					color="orange"
+					wireframe={false}
+					envMapIntensity={envMapIntensity}
+				/>
 			</mesh>
 
-			<mesh position-y={-1} rotation-x={-Math.PI * 0.5}>
+			<mesh position-y={0} rotation-x={-Math.PI * 0.5} visible={false}>
 				<planeGeometry args={[10, 10]} />
-				<meshStandardMaterial color="greenyellow" />
+				<meshStandardMaterial
+					color="greenyellow"
+					envMapIntensity={envMapIntensity}
+				/>
 				{/* <meshStandardMaterial color="greenyellow" wireframe={false} /> */}
 			</mesh>
 		</>
